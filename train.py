@@ -8,10 +8,11 @@ import argparse
 import numpy as np
 import pandas as pd
 from model import train
+from model_dropout import train_dropout
 import torch
 
 vowels = sorted(['y', 'é', 'ö', 'a', 'i', 'å', 'u', 'ä', 'e', 'o'])
-
+ 
 def a(f):
     mm = []
     with open(f, "r") as q:
@@ -26,10 +27,11 @@ def g(x, p):
     z[p.index(x)] = 1
     return z
 
+
 def b(u, p):
     gt = []
     gr = []
-    for v in range(len(u) - 4):
+    for v in range(len(u) - 4): 
         if u[v+2] not in vowels:
             continue
         
@@ -45,13 +47,18 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--k", dest="k", type=int, default=200)
     parser.add_argument("--r", dest="r", type=int, default=100)
-    parser.add_argument("m", type=str)
-    parser.add_argument("h", type=str)
+    parser.add_argument("m", type=str) #file name input for training data
+    parser.add_argument("h", type=str) #file name output for output model
+    parser.add_argument('--d', dest='dropout_flag', action='store_true')
     
     args = parser.parse_args()
 
     q = a(args.m)
     w = b(q[0], q[1])
-    t = train(w[0], w[1], q[1], args.k, args.r)
+    
+    if args.dropout_flag:
+        t = train_dropout(w[0], w[1], q[1], args.k, args.r) 
+    else:
+        t = train(w[0], w[1], q[1], args.k, args.r) 
 
     torch.save(t, args.h)

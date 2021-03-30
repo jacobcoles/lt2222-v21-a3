@@ -13,7 +13,6 @@ class VowelModel(nn.Module):
         self.sigmoid = nn.Sigmoid()
         self.lin3 = nn.Linear(hiddensize, outputsize)
         self.softmax = nn.LogSoftmax(dim=1)
-
         self.vocab = vocab
 
     def forward(self, x):
@@ -23,7 +22,6 @@ class VowelModel(nn.Module):
         x = self.sigmoid(x)
         x = self.lin3(x)
         x = self.softmax(x)
-
         return x
 
 def __shuffler__(X, y):
