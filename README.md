@@ -83,3 +83,4 @@ Variations of --r (epochs) option:
 There seems to be higher stability when including dropout. 
 
 ## Other notes
+ 
